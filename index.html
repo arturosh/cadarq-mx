@@ -1,0 +1,538 @@
+<!doctype html><html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Levantamiento y documentación AsBuilt con escaneo láser 3D y drones, modelado BIM, coordinación de ingenierías y diseño arquitectónico. Monterrey, N.L. y Nuevo Laredo, Tamps., con proyectos en toda la República.">
+<meta name="theme-color" content="#0F1315">
+<meta property="og:title" content="CADARQ · Construcción y Auditoría Digital BIM">
+<meta property="og:description" content="Levantamiento y documentación AsBuilt, modelado BIM, coordinación de ingenierías y diseño arquitectónico.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/portada-escaner-laser-nave.jpg">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<!--
+  Sitio de CADARQ para cadarq.mx.
+  Subir a la raíz del dominio: este index.html más la carpeta img/ (fotos, logo e ícono).
+  El único JavaScript es el menú móvil, el formulario y las apariciones al hacer scroll; sin él la página se ve completa.
+  Datos para cambiar en un solo lugar cada uno:
+    WhatsApp ... buscar "wa.me/528115116913" (aparece 2 veces)
+    Correo ..... buscar "info@cadarq.mx"
+-->
+<title>CADARQ · Construcción y Auditoría Digital BIM</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#0F1315; --bg2:#171C20; --bg3:#1E252B; --ink:#E8EDF1; --ink2:#AAB6C1; --mute:#8A98A6; --line:#26303A; --line2:#334050;
+  --accent:#00A6FF; --accent-ink:#0B1218; --accent-soft:rgba(0,166,255,.12);
+  --white-section:#F6F8FA; --white-ink:#12181D; --white-mute:#5C6B78; --white-line:#DCE3E9;
+  --display:'Outfit',"Century Gothic","Avenir Next","Segoe UI",sans-serif;
+  --body:'IBM Plex Sans',"Helvetica Neue",Arial,sans-serif;
+  --mono:'IBM Plex Mono',"SFMono-Regular",Consolas,monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#F4F7F9; --bg2:#FFFFFF; --bg3:#E9EEF2; --ink:#12181D; --ink2:#3B4854; --mute:#5C6B78; --line:#D7DFE6; --line2:#C3CDD6;
+    --accent:#0092E6; --accent-ink:#FFFFFF; --accent-soft:rgba(0,146,230,.10);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F4F7F9; --bg2:#FFFFFF; --bg3:#E9EEF2; --ink:#12181D; --ink2:#3B4854; --mute:#5C6B78; --line:#D7DFE6; --line2:#C3CDD6;
+  --accent:#0092E6; --accent-ink:#FFFFFF; --accent-soft:rgba(0,146,230,.10);
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
+a{color:inherit}
+img{display:block;max-width:100%}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance;letter-spacing:.02em}
+h1,h2{font-weight:500}
+h3{font-weight:500;letter-spacing:.015em}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--accent)}
+.lede{font-size:clamp(17px,1.5vw,19px);color:var(--ink2);max-width:62ch}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;gap:24px}
+.brand{display:flex;align-items:flex-end;gap:10px;text-decoration:none}
+.brand img{height:26px;width:auto}
+.brand span{font-family:var(--display);font-weight:500;font-size:19px;letter-spacing:.1em;line-height:1;position:relative;top:-1px}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:28px}
+.nav ul a{text-decoration:none;font-size:14px;color:var(--ink2);font-weight:500}
+.nav ul a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;padding:12px 20px;border:1px solid var(--accent);color:var(--accent);border-radius:3px;transition:background .15s,color .15s}
+.btn:hover{background:var(--accent);color:var(--accent-ink)}
+.btn.solid{background:var(--accent);color:var(--accent-ink)}
+.btn.solid:hover{filter:brightness(1.08)}
+.menu-btn{display:none;background:none;border:0;padding:8px;cursor:pointer;flex-direction:column;gap:5px}
+.menu-btn span{display:block;width:22px;height:2px;background:var(--ink);transition:transform .2s,opacity .2s}
+.menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-btn[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mnav{display:flex;flex-direction:column;border-top:1px solid var(--line);background:var(--bg);padding:8px clamp(20px,4vw,48px) 16px}
+.mnav a{text-decoration:none;color:var(--ink);font-family:var(--display);font-size:18px;padding:12px 0;border-bottom:1px solid var(--line)}
+.mnav a:last-child{border-bottom:0;color:var(--accent)}
+@media (max-width:820px){.nav ul{display:none}.menu-btn{display:flex}}
+@media (min-width:821px){.mnav{display:none!important}}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero-img{position:absolute;inset:0;background:url("img/portada-escaner-laser-nave.jpg") center 40%/cover no-repeat;}
+.hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,19,21,.92) 0%,rgba(15,19,21,.78) 45%,rgba(15,19,21,.35) 100%),linear-gradient(0deg,rgba(15,19,21,1) 0%,rgba(15,19,21,0) 35%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,166,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,166,255,.07) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent)}
+.hero .wrap{position:relative;padding-top:clamp(64px,10vw,120px);padding-bottom:clamp(56px,8vw,96px);color:#E8EDF1}
+.hero h1{font-size:clamp(38px,6.2vw,76px);font-weight:500;max-width:14ch;color:#fff}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lede{color:#C3CDD6;margin-top:22px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px}
+.hero .btn{color:#fff;border-color:rgba(255,255,255,.35)}
+.hero .btn.solid{background:#00A6FF;color:#0B1218;border-color:#00A6FF}
+.hero .btn:not(.solid):hover{background:rgba(255,255,255,.1)}
+.specs{position:relative;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.14);margin-top:clamp(48px,7vw,88px);padding-top:22px;gap:16px;font-family:var(--mono);font-size:13px}
+.specs div{color:#C3CDD6}
+.specs b{display:block;color:#fff;font-weight:500;font-size:15px;margin-top:4px;font-family:var(--display)}
+@media (max-width:720px){.specs{grid-template-columns:1fr 1fr}}
+
+/* SECTIONS */
+section{padding:clamp(64px,8vw,112px) 0}
+.sec-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px 64px;align-items:end;margin-bottom:clamp(36px,5vw,64px)}
+.sec-head h2{font-size:clamp(30px,4vw,48px);font-weight:500;margin-top:14px}
+@media (max-width:820px){.sec-head{grid-template-columns:1fr}}
+
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.pillar{background:var(--bg2);padding:32px 28px 36px;display:flex;flex-direction:column;gap:16px;text-decoration:none;position:relative;transition:background .15s}
+.pillar:hover{background:var(--bg3)}
+.pillar .k{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.1em}
+.pillar h3{font-size:24px;font-weight:500}
+.pillar p{color:var(--ink2);font-size:15px}
+.pillar ul{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink2)}
+.pillar li{display:flex;gap:10px}.pillar li::before{content:"—";color:var(--accent)}
+.pillar .go{margin-top:auto;padding-top:14px;font-family:var(--display);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+@media (max-width:900px){.pillars{grid-template-columns:1fr}}
+
+/* SERVICE BLOCKS */
+.svc{border-top:1px solid var(--line)}
+.svc-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px clamp(32px,5vw,72px);padding:clamp(40px,5vw,64px) 0;border-bottom:1px solid var(--line);align-items:start}
+.svc-row.flip{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+.svc-row.flip .txt{order:2}
+.svc-row .txt h3{font-size:clamp(24px,2.6vw,32px);font-weight:500;margin-top:14px}
+.svc-row .txt p{color:var(--ink2);margin-top:16px;max-width:52ch}
+.svc-row .txt ul{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:14.5px;color:var(--ink2)}
+.svc-row .txt li{display:flex;gap:10px}.svc-row .txt li::before{content:"";flex:0 0 6px;height:6px;margin-top:9px;background:var(--accent)}
+.tag{display:inline-block;font-family:var(--mono);font-size:12px;color:var(--mute);border:1px solid var(--line2);padding:3px 8px;border-radius:2px;margin:14px 6px 0 0}
+.gal{display:grid;gap:10px}
+.gal.two{grid-template-columns:1fr 1fr}
+.gal.tall{grid-template-columns:2fr 1fr}
+.gal img{width:100%;height:100%;object-fit:cover;border:1px solid var(--line);aspect-ratio:4/3}
+.gal .wide{grid-column:1/-1}.gal .wide img{aspect-ratio:16/8}
+.gal.tall img{aspect-ratio:auto;height:100%}
+.equip{display:flex;flex-wrap:wrap;gap:8px}
+.feature{padding:clamp(40px,5vw,64px) 0 0;border-top:1px solid var(--line)}
+.feature-head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px clamp(32px,5vw,72px);align-items:start}
+.feature-head h3{font-size:clamp(28px,3.4vw,42px);margin-top:14px}
+.feature-head p{color:var(--ink2);max-width:60ch}
+.feature-head ul{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:14.5px;color:var(--ink2)}
+.feature-head li{display:flex;gap:10px}.feature-head li::before{content:"";flex:0 0 6px;height:6px;margin-top:9px;background:var(--accent)}
+.feature-gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(160px,22vw);gap:10px;margin-top:clamp(28px,4vw,44px)}
+.feature-gal img{width:100%;height:100%;object-fit:cover;border:1px solid var(--line)}
+.feature-gal .big{grid-column:span 2;grid-row:span 2}
+@media (max-width:820px){.feature-head{grid-template-columns:1fr}.feature-gal{grid-template-columns:1fr 1fr;grid-auto-rows:minmax(140px,40vw)}}
+.fleet{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.fleet div{border:1px solid var(--line);background:var(--bg2);padding:14px 16px}
+.fleet .m{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--mute);text-transform:uppercase}
+.fleet b{display:block;font-family:var(--display);font-weight:500;font-size:17px;margin-top:4px}
+.fleet span{display:block;font-size:13px;color:var(--ink2);margin-top:4px}
+@media (max-width:480px){.fleet{grid-template-columns:1fr}}
+@media (max-width:820px){.svc-row,.svc-row.flip{grid-template-columns:1fr}.svc-row.flip .txt{order:0}}
+
+/* ABOUT / NUMBERS */
+.about{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.about-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px clamp(32px,6vw,96px);align-items:center}
+.about h2{font-size:clamp(28px,3.4vw,40px);font-weight:500;margin-top:14px}
+.about p{color:var(--ink2);margin-top:18px;max-width:58ch}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.fact{background:var(--bg);padding:24px 22px}
+.fact b{font-family:var(--display);font-size:clamp(30px,3.4vw,40px);font-weight:700;color:var(--accent);display:block;line-height:1;font-variant-numeric:tabular-nums}
+.fact span{display:block;color:var(--mute);font-size:13.5px;margin-top:8px}
+.certs{margin-top:28px;display:grid;gap:10px;font-size:14.5px;color:var(--ink2)}
+.certs div{display:flex;gap:12px}.certs div::before{content:"✓";color:var(--accent);font-family:var(--mono)}
+@media (max-width:820px){.about-grid{grid-template-columns:1fr}}
+
+/* CLIENTS */
+.clients{background:var(--white-section);color:var(--white-ink)}
+.clients .eyebrow{color:#0092E6}.clients .eyebrow::before{background:#0092E6}
+.clients h2{font-size:clamp(28px,3.4vw,40px);font-weight:500;margin-top:14px}
+.clients p{color:var(--white-mute);margin-top:12px;max-width:60ch}
+.clients .logos{margin-top:40px;background:#fff;border:1px solid var(--white-line);padding:clamp(16px,3vw,36px)}
+.clients small{display:block;margin-top:14px;font-family:var(--mono);font-size:11.5px;color:var(--white-mute)}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px clamp(32px,6vw,96px)}
+.contact h2{font-size:clamp(30px,4vw,48px);font-weight:500;margin-top:14px}
+.contact .lede{margin-top:18px}
+.ways{margin-top:32px;display:grid;gap:14px}
+.way{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border:1px solid var(--line);background:var(--bg2);text-decoration:none;transition:border-color .15s}
+.way:hover{border-color:var(--accent)}
+.way .l{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.08em;text-transform:uppercase}
+.way .v{font-family:var(--display);font-size:18px;font-weight:600;margin-top:2px}
+.way svg{width:20px;height:20px;flex:0 0 20px;color:var(--accent)}
+form{display:grid;gap:14px;background:var(--bg2);border:1px solid var(--line);padding:28px}
+form label{display:grid;gap:6px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+form input,form select,form textarea{font:15px var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line2);padding:12px 14px;border-radius:2px;width:100%}
+form textarea{min-height:110px;resize:vertical}
+form .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+form button{cursor:pointer;justify-self:start}
+form .note{font-size:13px;color:var(--mute)}
+@media (max-width:820px){.contact-grid{grid-template-columns:1fr}form .two{grid-template-columns:1fr}}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:36px 0;font-size:13.5px;color:var(--mute)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 32px;align-items:center}
+footer .brand span{color:var(--ink)}
+footer .quote{font-family:var(--mono);font-size:12.5px}
+footer .legal{flex-basis:100%;font-size:12px;color:var(--mute);border-top:1px solid var(--line);padding-top:16px;max-width:none}
+
+/* WhatsApp float */
+.wa{position:fixed;right:20px;bottom:20px;z-index:30;display:flex;align-items:center;gap:10px;background:#25D366;color:#062B14;text-decoration:none;font-family:var(--display);font-weight:600;font-size:14px;padding:12px 16px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.wa svg{width:20px;height:20px}
+
+/* Aparición de imágenes al hacer scroll (mismo patrón que ssec.mx) */
+@media (prefers-reduced-motion:no-preference){
+  .js .revela{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .js .revela.visto{opacity:1;transform:none}
+}
+</style></head><body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="CADARQ inicio"><img src="img/logo-cadarq.png" alt=""><span>CADARQ</span></a>
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#auditoria">Auditoría Digital</a></li>
+      <li><a href="#bim">Gerenciamiento BIM</a></li>
+      <li><a href="#diseno">Diseño</a></li>
+      <li><a href="#clientes">Clientes</a></li>
+    </ul>
+    <button class="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="mnav" id="mnav" hidden>
+    <a href="#servicios">Servicios</a>
+    <a href="#auditoria">Auditoría Digital</a>
+    <a href="#bim">Gerenciamiento BIM</a>
+    <a href="#diseno">Diseño</a>
+    <a href="#clientes">Clientes</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
+
+<div class="hero" id="top">
+  <div class="hero-img" role="img" aria-label="Escáner láser 3D sobre losa de nave industrial al atardecer"></div>
+  <div class="hero-grid"></div>
+  <div class="wrap">
+    <p class="eyebrow">Construcción y Auditoría Digital BIM · Monterrey</p>
+    <h1 style="margin-top:22px">La realidad de tu obra, <em>medida al milímetro.</em></h1>
+    <p class="lede">Escaneo láser 3D, levantamientos con dron, modelos AsBuilt y coordinación de ingenierías en BIM para plantas industriales, naves, CEDIS y proyectos comerciales en toda la República Mexicana.</p>
+    <div class="hero-cta">
+      <a class="btn solid" href="#contacto">Solicitar cotización</a>
+      <a class="btn" href="#servicios">Ver servicios</a>
+    </div>
+    <div class="specs">
+      <div>Operando desde<b>2011</b></div>
+      <div>Cobertura<b>Todo México</b></div>
+      <div>Planicidad de pisos<b>ASTM E1155 (FF/FL)</b></div>
+      <div>Equipos / Tecnología<b>Trimble · Leica · DJI · GeoMax</b></div>
+    </div>
+  </div>
+</div>
+
+<section id="servicios">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Servicios</p>
+        <h2>Tres disciplinas, un solo modelo de la realidad.</h2>
+      </div>
+      <p class="lede">Levantamiento y documentación AsBuilt, coordinación de ingenierías y proyecto arquitectónico: tres servicios independientes que comparten un mismo lenguaje, BIM, y un mismo objetivo: que la información con la que tomas decisiones de diseño corresponda con la realidad.</p>
+    </div>
+    <div class="pillars">
+      <a class="pillar" href="#auditoria">
+        <span class="k">CAPTURA</span>
+        <h3>Auditoría Digital BIM</h3>
+        <p>Levantamiento y documentación AsBuilt: el estado real de la planta o la obra, capturado con precisión topográfica y entregado como modelo BIM.</p>
+        <ul><li>Escaneo láser 3D / HDS</li><li>Levantamiento UAV (drones)</li><li>Modelado AsBuilt AR+ST+MEP</li></ul>
+        <span class="go">Ver detalle →</span>
+      </a>
+      <a class="pillar" href="#bim">
+        <span class="k">COORDINACIÓN</span>
+        <h3>Gerenciamiento BIM</h3>
+        <p>Cruzamos las ingenierías en un modelo colaborativo para resolver conflictos en oficina, no en obra.</p>
+        <ul><li>Integración y cruce de ingenierías</li><li>Detección de interferencias geométricas y operativas</li><li>Colaboración BIM Abierta en plataforma en línea</li><li>Seguimiento de conflictos hasta su cierre</li></ul>
+        <span class="go">Ver detalle →</span>
+      </a>
+      <a class="pillar" href="#diseno">
+        <span class="k">PROYECTO</span>
+        <h3>Diseño Arquitectónico</h3>
+        <p>Proyecto ejecutivo industrial y conceptual comercial, nacido en BIM desde el primer trazo.</p>
+        <ul><li>Bodegas y centros de distribución</li><li>Ampliaciones en áreas de operación</li><li>Oficinas corporativas</li><li>Plazas, restaurantes y usos mixtos</li></ul>
+        <span class="go">Ver detalle →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="svc" id="auditoria" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head" style="padding-top:clamp(48px,6vw,80px);margin-bottom:0">
+      <div>
+        <p class="eyebrow">Auditoría Digital BIM</p>
+        <h2>La realidad de tu planta, documentada y lista para usarse.</h2>
+      </div>
+      <p class="lede">Escáneres terrestres, drones, GPS+RTK y estación total. Levantamos proyectos arquitectónicos, topográficos, estructurales, industriales y mecánicos, además de análisis de tanques y colados, y entregamos el resultado como modelo BIM y planos AsBuilt.</p>
+    </div>
+
+    <div class="svc-row">
+      <div class="txt">
+        <p class="eyebrow">01 · Captura</p>
+        <h3>Escaneo láser 3D / HDS</h3>
+        <p>Nubes de puntos de alta densidad para plantas en operación, naves, azoteas de producción e infraestructura eléctrica. La base para cualquier modelo AsBuilt o cruce de ingeniería confiable.</p>
+        <ul>
+          <li>Análisis de tanques: verticalidad, ovalidad y deformación por estación</li>
+          <li>Planicidad de pisos y colados FF/FL bajo norma ASTM E1155</li>
+          <li>Acompañamiento durante colados: puntos altos y bajos en tiempo real, con el concreto aún fresco</li>
+        </ul>
+        <div class="equip"><span class="tag">Leica</span><span class="tag">Trimble</span><span class="tag">GeoMax</span><span class="tag">GPS + RTK</span></div>
+      </div>
+      <div class="gal two">
+        <div class="wide"><img src="img/nube-de-puntos-a-color.jpg" alt="Nube de puntos a color de tubería industrial"></div>
+        <img src="img/escaner-laser-en-nave-industrial.jpg" alt="Escáner láser en nave industrial vacía">
+        <img src="img/mapa-de-calor-de-planicidad.jpg" alt="Mapa de calor de planicidad de piso FF/FL">
+      </div>
+    </div>
+
+    <div class="svc-row flip">
+      <div class="txt">
+        <p class="eyebrow">02 · Captura aérea</p>
+        <h3>Levantamiento UAV (drones)</h3>
+        <p>Para proyectos que requieren mayor velocidad o extensión de área, con una precisión específica. Drones con cámaras térmicas, HD y escáner LiDAR 3D.</p>
+        <ul>
+          <li>Topográficos de gran extensión: agricultura, vialidades</li>
+          <li>Conjuntos arquitectónicos y master plan</li>
+          <li>Fotografía arquitectónica y estudios térmicos en equipo y azoteas</li>
+        </ul>
+        <div class="fleet">
+          <div><span class="m">DJI Enterprise</span><b>Matrice 4E</b><span>Fotogrametría y mapeo de alta precisión con RTK</span></div>
+          <div><span class="m">DJI Enterprise</span><b>Matrice 4T</b><span>Cámara térmica y telefoto para inspección industrial</span></div>
+        </div>
+      </div>
+      <div class="gal two">
+        <img src="img/vista-aerea-de-excavacion-en.jpg" alt="Vista aérea de excavación en obra">
+        <img src="img/modelo-fotogrametrico-de-conjunto-industrial.jpg" alt="Modelo fotogramétrico de conjunto industrial">
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-head">
+        <div>
+          <p class="eyebrow">03 · Modelado · Lo que nos distingue</p>
+          <h3>Modelado AsBuilt (AR + ST + MEP)</h3>
+        </div>
+        <div>
+          <p>Escanear es el punto de partida; el valor está en el modelo. Convertimos la nube de puntos en un modelo BIM y planos actualizados, al estándar y nivel de detalle que pida el cliente: desde volumetrías geométricamente reales hasta equipos mecánicos con puntos de conexión y especificaciones.</p>
+          <ul>
+            <li>Arquitectura, estructura e instalaciones (MEP) en un solo modelo federado</li>
+            <li>Clústers y redes de distribución por sistemas, listos para cruce de ingeniería y P&amp;ID</li>
+            <li>Cuantificaciones y planos AsBuilt directamente del modelo</li>
+            <li>Tuberías y válvulas en distintos niveles de detalle según el uso</li>
+          </ul>
+        </div>
+      </div>
+      <div class="feature-gal">
+        <img class="big" src="img/modelo-bim-de-estructura-y.jpg" alt="Modelo BIM de estructura y tubería sobre nube de puntos">
+        <img src="img/render-de-equipos-mecanicos-modelados.jpg" alt="Render de equipos mecánicos modelados AsBuilt">
+        <img src="img/axonometria-de-edificio-modelado-en.jpg" alt="Axonometría de edificio modelado en BIM">
+        <img src="img/analisis-de-tanque-a-partir.jpg" alt="Análisis de tanque a partir de escaneo 3D">
+        <img src="img/nube-de-puntos-a-color.jpg" alt="Nube de puntos de tubería industrial">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="svc" id="bim" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head" style="padding-top:clamp(48px,6vw,80px);margin-bottom:0">
+      <div>
+        <p class="eyebrow">Gerenciamiento BIM</p>
+        <h2>Los conflictos se resuelven en el modelo, no en la obra.</h2>
+      </div>
+      <p class="lede">Trabajamos bajo una metodología de Colaboración BIM Abierta: una plataforma en línea donde las partes responsables de cada diseño ven la misma información y deciden con ella.</p>
+    </div>
+
+    <div class="svc-row" style="border-bottom:0">
+      <div class="txt">
+        <p class="eyebrow">Coordinación</p>
+        <h3>Integración y cruce de ingenierías</h3>
+        <p>Revisión de interferencias geométricas y operativas entre arquitectura, estructura e instalaciones. Detectado el conflicto, nuestro equipo propone el reacomodo de elementos.</p>
+        <ul>
+          <li>Plataforma de colaboración en línea con acceso para todas las partes</li>
+          <li>Reportes de interferencias priorizados por sistema y nivel</li>
+          <li>Seguimiento de la solución hasta su cierre en el modelo</li>
+        </ul>
+        <div class="equip"><span class="tag">Revit</span><span class="tag">Navisworks</span><span class="tag">AutoCAD</span><span class="tag">Civil 3D</span><span class="tag">Revizto</span><span class="tag">Cyclone</span></div>
+      </div>
+      <div class="gal tall">
+        <img src="img/deteccion-de-interferencias-en-estructura.jpg" alt="Detección de interferencias en estructura metálica">
+        <img src="img/corte-de-cruce-de-instalaciones.jpg" alt="Corte de cruce de instalaciones en columna">
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<section class="svc" id="diseno" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head" style="padding-top:clamp(48px,6vw,80px);margin-bottom:0">
+      <div>
+        <p class="eyebrow">Diseño Arquitectónico</p>
+        <h2>Proyecto ejecutivo que ya nace coordinado.</h2>
+      </div>
+      <p class="lede">Arquitectura industrial y conceptual comercial desarrollada en BIM: bodegas de almacenamiento, CEDIS, ampliaciones en áreas de operación, oficinas, plazas comerciales, restaurantes y usos mixtos.</p>
+    </div>
+    <div class="svc-row" style="border-bottom:0;grid-template-columns:1fr">
+      <div class="gal two">
+        <img src="img/render-de-nave-industrial-con.jpg" alt="Render de nave industrial con patio de maniobras">
+        <img src="img/render-de-bodega-con-oficinas.jpg" alt="Render de bodega con oficinas en fachada">
+        <img src="img/render-interior-de-oficinas-corporativas.jpg" alt="Render interior de oficinas corporativas">
+        <img src="img/render-de-planta-industrial-con.jpg" alt="Render de planta industrial con tanques">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="empresa">
+  <div class="wrap about-grid">
+    <div>
+      <p class="eyebrow">Empresa</p>
+      <h2>Una base digital sólida y veraz para tus proyectos.</h2>
+      <p>Consolidada en 2011 en Monterrey, Nuevo León. Especialistas en levantamiento y documentación AsBuilt: capturamos la realidad de plantas industriales, equipos de proceso, naves y edificios existentes para convertirla en modelos BIM y planos confiables. Nuestra experiencia abarca además la coordinación de ingenierías, el gerenciamiento BIM y el proyecto ejecutivo arquitectónico, siempre bajo una metodología de modelos colaborativos.</p>
+      <p>Nuestros valores: colaboración abierta, crecimiento en equipo y capacitación continua a personal y colaboradores externos.</p>
+      <p>Con base en Monterrey, N.L. y Nuevo Laredo, Tamps., damos servicio a la mayor parte de la República Mexicana, con proyectos ejecutados desde el norte de Sonora hasta el sur de Veracruz.</p>
+      <h3 style="font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-top:32px;font-family:var(--mono);font-weight:500">Certificaciones y cumplimiento</h3>
+      <div class="certs" style="margin-top:14px">
+        <div>Equipos de última generación para brindar el más alto estándar a nuestros clientes</div>
+        <div>Capacitación en seguridad industrial (DC3): trabajos en alturas, espacios confinados, análisis de riesgos</div>
+        <div>Capacitación en Autodesk Revit, AutoCAD, Leica Cyclone y Trimble RealWorks por instructor certificado</div>
+        <div>Licenciamiento original en software de análisis y diseño</div>
+        <div>Empresa en cumplimiento: IMSS, Infonavit, Fonacot, REPSE</div>
+      </div>
+    </div>
+    <div>
+      <div class="facts">
+        <div class="fact"><b>15</b><span>años de operación desde Monterrey</span></div>
+        <div class="fact"><b>+50</b><span>proyectos de gran escala</span></div>
+        <div class="fact"><b>+26</b><span>clientes industriales y corporativos</span></div>
+        <div class="fact"><b>3</b><span>disciplinas integradas en un modelo</span></div>
+      </div>
+      <img src="img/escaner-laser-en-obra-nocturna.jpg" alt="Escáner láser en obra nocturna" style="margin-top:10px;border:1px solid var(--line)">
+    </div>
+  </div>
+</section>
+
+<section class="clients" id="clientes">
+  <div class="wrap">
+    <p class="eyebrow">Clientes</p>
+    <h2>Han confiado en nuestra información.</h2>
+    <p>Algunas de las empresas con las que hemos colaborado en sus proyectos: industria, corporativos, constructoras y despachos de arquitectura.</p>
+    <div class="logos"><img src="img/clientes.jpg" alt="Logotipos de clientes: PepsiCo, MillerKnoll, Unilever, Haskell, Cushman & Wakefield, Heineken, Cartier, JLL, Estadio BBVA, Integricop, Gensler, Bernardo Hinojosa, Copachisa, Heineken México, Beck, Escala, Voltrak, Be/Live Projects, Banorte, LeNoir & Asoc., Constructora Maiz Mier, Dycusa, Cymesa, Viza Fire, Desarrollos Delta, Omega Empresas Unidas"></div>
+    <small>Los logotipos y nombres mostrados son propiedad de sus respectivos titulares y se presentan únicamente con fines informativos, sin que ello implique afiliación comercial, patrocinio o respaldo.</small>
+  </div>
+</section>
+
+<section class="contact" id="contacto">
+  <div class="wrap contact-grid">
+    <div>
+      <p class="eyebrow">Contacto</p>
+      <h2>Cuéntanos qué necesitas medir.</h2>
+      <p class="lede">Respondemos con una propuesta técnica y económica. Si ya tienes planos, fotos o un modelo, mejor: adjúntalos en tu correo.</p>
+      <div class="ways">
+        <a class="way" href="mailto:info@cadarq.mx"><div><div class="l">Correo</div><div class="v">info@cadarq.mx</div></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></a>
+        <a class="way" href="https://wa.me/528115116913?text=Hola%2C%20me%20interesa%20un%20servicio%20que%20vi%20en%20la%20p%C3%A1gina%20de%20CADARQ." target="_blank" rel="noopener"><div><div class="l">WhatsApp</div><div class="v">Escríbenos</div></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"/></svg></a>
+        <div class="way" style="cursor:default"><div><div class="l">Oficinas</div><div class="v">Monterrey, N.L. · Nuevo Laredo, Tamps. · Cobertura nacional</div></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-6-5.3-6-11a6 6 0 0 1 12 0c0 5.7-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg></div>
+      </div>
+    </div>
+    <form id="f" novalidate>
+      <div class="two">
+        <label>Nombre<input name="nombre" required autocomplete="name"></label>
+        <label>Empresa<input name="empresa" autocomplete="organization"></label>
+      </div>
+      <div class="two">
+        <label>Correo<input name="correo" type="email" required autocomplete="email"></label>
+        <label>Teléfono<input name="tel" type="tel" autocomplete="tel"></label>
+      </div>
+      <label>Servicio
+        <select name="servicio">
+          <option>Levantamiento y documentación AsBuilt</option>
+          <option>Planicidad de pisos FF/FL</option>
+          <option>Levantamiento con dron</option>
+          <option>Coordinación de ingenierías BIM</option>
+          <option>Diseño arquitectónico</option>
+          <option>Otro</option>
+        </select>
+      </label>
+      <label>Proyecto<textarea name="msg" placeholder="Ubicación, tipo de instalación, superficie aproximada, fecha estimada…"></textarea></label>
+      <button class="btn solid" type="submit">Enviar solicitud</button>
+      <p class="note">Al enviar se abre tu correo con la solicitud lista para info@cadarq.mx.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/logo-cadarq.png" alt=""><span>CADARQ</span></a>
+    <span class="quote">"delivering TRUE BIM projects"</span>
+    <span>© 2011–2026 Construcción y Auditoría Digital BIM · info@cadarq.mx</span>
+    <p class="legal">Los logotipos, nombres de marcas, equipos, software y clientes mencionados en este sitio (Trimble, Leica, DJI, GeoMax, Autodesk, Revizto y demás) son propiedad de sus respectivos titulares y se muestran únicamente con fines informativos, sin que ello implique afiliación, patrocinio o respaldo.</p>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/528115116913?text=Hola%2C%20me%20interesa%20un%20servicio%20que%20vi%20en%20la%20p%C3%A1gina%20de%20CADARQ." target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.6 1.1 2.7.1.2 1.9 2.9 4.6 4 1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3z"/></svg>WhatsApp</a>
+
+<script>
+(function(){
+  var mb=document.querySelector('.menu-btn'),mn=document.getElementById('mnav');
+  mb.addEventListener('click',function(){var open=mb.getAttribute('aria-expanded')==='true';mb.setAttribute('aria-expanded',String(!open));mn.hidden=open;});
+  mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mb.setAttribute('aria-expanded','false');mn.hidden=true;});});
+  var f=document.getElementById('f');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var d=new FormData(f);
+    var body='Nombre: '+d.get('nombre')+'\nEmpresa: '+d.get('empresa')+'\nCorreo: '+d.get('correo')+'\nTeléfono: '+d.get('tel')+'\nServicio: '+d.get('servicio')+'\n\nProyecto:\n'+d.get('msg');
+    location.href='mailto:info@cadarq.mx?subject='+encodeURIComponent('Solicitud de cotización · '+d.get('servicio'))+'&body='+encodeURIComponent(body);
+  });
+})();
+</script>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window))return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  document.documentElement.classList.add('js');
+  var sel='.gal img, .feature-gal img, .about img, .logos img, .fleet > div';
+  var els=document.querySelectorAll(sel);
+  els.forEach(function(el){
+    el.classList.add('revela');
+    var sibs=Array.prototype.filter.call(el.parentNode.children,function(c){return c.matches(sel)||c.querySelector('img');});
+    var i=sibs.indexOf(el); if(i<0&&el.parentNode.parentNode){i=Array.prototype.indexOf.call(el.parentNode.parentNode.children,el.parentNode);}
+    el.style.transitionDelay=(Math.max(0,Math.min(i,4))*0.12)+'s';
+  });
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visto');io.unobserve(e.target);}});
+  },{rootMargin:'0px 0px -8% 0px',threshold:0.1});
+  els.forEach(function(el){io.observe(el);});
+})();
+</script>
+</body></html>
